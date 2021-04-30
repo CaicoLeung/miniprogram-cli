@@ -23,15 +23,15 @@ const setProjectTypeHandler = (name, language, style) => {
   try {
     const projectPath = path.join(process.cwd(), name)
     if (language === 'javasrcipt') {
-      fs.renameSync(path.join(projectPath, '/template/temp.ts'), path.join(projectPath, '/template/temp.js'))
-      fs.renameSync(path.join(projectPath, '/component/temp.ts'), path.join(projectPath, '/component/temp.js'))
+      fsExtra.renameSync('template/temp.ts', 'template/temp.js')
+      fs.renameSync('component/temp.ts', 'component/temp.js')
     }
     if (['wxss', 'sass', 'less'].includes(style)) {
-      fs.renameSync(path.join(projectPath, '/template/temp.scss'), path.join(projectPath, `/template/temp.${style}`))
-      fs.renameSync(path.join(projectPath, '/component/temp.scss'), path.join(projectPath, `/component/temp.${style}`))
+      fs.renameSync('template/temp.scss', `template/temp.${style}`)
+      fs.renameSync('component/temp.scss', `component/temp.${style}`)
     }
-    fsExtra.copySync('template', path.join(projectPath, '_template'))
-    fsExtra.copySync('component', path.join(projectPath, '_component'))
+    fsExtra.copySync('template', path.join(projectPath, 'app/_template'))
+    fsExtra.copySync('component', path.join(projectPath, 'app/_component'))
   } catch (err) {
     console.log(chalk.red(err.message));
   }
@@ -50,7 +50,8 @@ const selectTypeHandler = (opts) => {
     console.log(chalk.green('success! 项目初始化成功！'))
     console.log(
       chalk.greenBright('开启项目: ') + '\n' +
-      chalk.greenBright('cd ' + initConfig.name) + '\n' +
+      chalk.greenBright('cd ' + opts.name) + '\n' +
+      chalk.greenBright('安装依赖, 推荐用yarn: ') + '\n' +
       chalk.greenBright('yarn') + '\n' +
       chalk.greenBright('开始开发~~~!')
     );
