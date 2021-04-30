@@ -11,11 +11,11 @@ CaicoLeung/gulp-wechat-miniprogram项目的脚手架
 - install安装
 
     ```bash
-    yarn global add miniprogram-cli
+    yarn global add gulp-miniprogram-cli
     ```
 
     ```bash
-    npm install -g miniprogram-cli
+    npm install -g gulp-miniprogram-cli
     ```
 
 - 初始化项目
