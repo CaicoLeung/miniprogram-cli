@@ -1,5 +1,5 @@
 {
-  "name": "miniprogram-cli",
+  "name": "gulp-miniprogram-cli",
   "version": "1.0.0",
   "description": "微信小程序开发流脚手架, https://github.com/CaicoLeung/gulp-wechat-miniprogram",
   "main": "index.js",
