@@ -10,7 +10,7 @@ const fs = require('fs')
 const fsExtra = require('fs-extra')
 const { createFiles } = require('./utils/createFiles')
 
-program.version('1.0.0');
+program.version('1.1.0');
 
 const spinner = ora('正在下载模板, 请稍候...')
 
@@ -24,12 +24,12 @@ const setProjectTypeHandler = (name, language, style) => {
   try {
     const projectPath = path.join(process.cwd(), name)
     if (language === 'javasrcipt') {
-      fsExtra.renameSync('_template/temp.ts', '_template/temp.js')
-      fs.renameSync('_component/temp.ts', '_component/temp.js')
+      fsExtra.renameSync('_template/index.ts', '_template/index.js')
+      fs.renameSync('_component/index.ts', '_component/index.js')
     }
     if (['wxss', 'sass', 'less'].includes(style)) {
-      fs.renameSync('_template/temp.scss', `_template/temp.${style}`)
-      fs.renameSync('_component/temp.scss', `_component/temp.${style}`)
+      fs.renameSync('_template/index.scss', `_template/index.${style}`)
+      fs.renameSync('_component/index.scss', `_component/index.${style}`)
     }
     fsExtra.copySync('_template', path.join(projectPath, 'app/_template'))
     fsExtra.copySync('_component', path.join(projectPath, 'app/_component'))

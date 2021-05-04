@@ -10,13 +10,13 @@ exports.createFiles = async function (_path, type) {
   }
   const targetPath = _path.toLowerCase()
   if (type === 'page') {
-    fsExtra.copySync('_template', path.join(process.cwd(), `app/pages/${targetPath}`))
+    fsExtra.copySync(path.join(process.cwd(), 'app/_template'), path.join(process.cwd(), `app/pages/${targetPath}`))
     const appJson = await readAppJson()
     if (appJson.pages) {
       appJson.pages.push(`pages/${targetPath}/index`)
       writeAppJson(appJson)
     }
   } else if (type === 'component') {
-    fsExtra.copySync('_component', path.join(process.cwd(), `app/components/${targetPath}`))
+    fsExtra.copySync(path.join(process.cwd(), 'app/_component'), path.join(process.cwd(), `app/components/${targetPath}`))
   }
 }
