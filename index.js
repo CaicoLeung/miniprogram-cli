@@ -8,6 +8,7 @@ const ora = require('ora')
 const path = require('path')
 const fs = require('fs')
 const fsExtra = require('fs-extra')
+const { createFiles } = require('./utils/createFiles')
 
 program.version('1.0.0');
 
@@ -23,15 +24,15 @@ const setProjectTypeHandler = (name, language, style) => {
   try {
     const projectPath = path.join(process.cwd(), name)
     if (language === 'javasrcipt') {
-      fsExtra.renameSync('template/temp.ts', 'template/temp.js')
-      fs.renameSync('component/temp.ts', 'component/temp.js')
+      fsExtra.renameSync('_template/temp.ts', '_template/temp.js')
+      fs.renameSync('_component/temp.ts', '_component/temp.js')
     }
     if (['wxss', 'sass', 'less'].includes(style)) {
-      fs.renameSync('template/temp.scss', `template/temp.${style}`)
-      fs.renameSync('component/temp.scss', `component/temp.${style}`)
+      fs.renameSync('_template/temp.scss', `_template/temp.${style}`)
+      fs.renameSync('_component/temp.scss', `_component/temp.${style}`)
     }
-    fsExtra.copySync('template', path.join(projectPath, 'app/_template'))
-    fsExtra.copySync('component', path.join(projectPath, 'app/_component'))
+    fsExtra.copySync('_template', path.join(projectPath, 'app/_template'))
+    fsExtra.copySync('_component', path.join(projectPath, 'app/_component'))
   } catch (err) {
     console.log(chalk.red(err.message));
   }
@@ -64,6 +65,21 @@ const selectTypeHandler = (opts) => {
   }
 }
 
+program.option('-p, --page <page>', '所需创建Page的路径, eg: Home, Home/Search')
+  .option('-c, --comp <component>', '所需创建Component的路径, eg: Button')
+
+program.parse(process.argv);
+
+const options = program.opts();
+
+if (options.page) {
+  createFiles(options.page, 'page')
+}
+
+if (options.comp) {
+  createFiles(options.comp, 'component')
+}
+
 program.command('init')
   .description('初始化项目')
   .action(async (name, opts) => {
@@ -91,5 +107,3 @@ program.command('init')
 
     selectTypeHandler(config)
   })
-
-program.parse(process.argv);
