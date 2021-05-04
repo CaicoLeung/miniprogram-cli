@@ -8,7 +8,7 @@ CaicoLeung/gulp-wechat-miniprogram项目的脚手架
 
 ## 开始使用
 
-- install安装
+- 安装
 
     ```bash
     yarn global add gulp-miniprogram-cli
@@ -16,6 +16,20 @@ CaicoLeung/gulp-wechat-miniprogram项目的脚手架
 
     ```bash
     npm install -g gulp-miniprogram-cli
+    ```
+
+- 创建Page, 在app/pages下创建Page文件, 并自动在app.json添加pages本次路径
+
+    ```bash
+    mp-cli -p home
+    mp-cli --page home
+    ```
+
+- 创建Component,  在app/components下创建Component文件
+
+    ```bash
+    mp-cli -c button
+    mp-cli --comp button
     ```
 
 - 初始化项目
