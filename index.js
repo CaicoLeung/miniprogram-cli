@@ -67,20 +67,7 @@ const selectTypeHandler = (opts) => {
 
 program.option('-p, --page <page>', '所需创建Page的路径, eg: Home, Home/Search')
   .option('-c, --comp <component>', '所需创建Component的路径, eg: Button')
-
-program.parse(process.argv);
-
-const options = program.opts();
-
-if (options.page) {
-  createFiles(options.page, 'page')
-}
-
-if (options.comp) {
-  createFiles(options.comp, 'component')
-}
-
-program.command('init')
+  .command('init')
   .description('初始化项目')
   .action(async (name, opts) => {
     const config = await inquirer.prompt([
@@ -107,3 +94,15 @@ program.command('init')
 
     selectTypeHandler(config)
   })
+
+program.parse(process.argv);
+
+const options = program.opts();
+
+if (options.page) {
+  createFiles(options.page, 'page')
+}
+
+if (options.comp) {
+  createFiles(options.comp, 'component')
+}
