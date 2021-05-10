@@ -22,7 +22,7 @@ const taskFirst = (list, defaultValue) => {
   return defaultValue
 }
 
-exports = {
+module.exports = {
   isLength,
   isArrayLike,
   taskFirst

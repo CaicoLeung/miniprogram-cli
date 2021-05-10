@@ -7,10 +7,11 @@ const download = require('download-git-repo')
 const { defaultConfig } = require('./helper')
 const fsExtra = require('fs-extra');
 const ora = require('ora');
+const { joinCwd } = require('../utils');
 
 const spinner = ora("开始拉取模板...")
 
-const main = async function (projectPath) {
+const main = async function (projectName) {
   const config = await inquirer.prompt([
     {
       name: 'language',
@@ -29,6 +30,7 @@ const main = async function (projectPath) {
   ])
 
   spinner.start()
+  const projectPath = joinCwd(projectName)
   const cloneErrHandler = (error) => {
     if (error) {
       spinner.fail('拉取模板失败:')
@@ -36,16 +38,10 @@ const main = async function (projectPath) {
       return
     }
     try {
-      if (config.language === 'javasrcipt') {
-        fsExtra.renameSync('_template/index.ts', '_template/index.js')
-        fsExtra.renameSync('_component/index.ts', '_component/index.js')
-      }
       if (['wxss', 'sass', 'less'].includes(config.style)) {
-        fsExtra.renameSync('_template/index.scss', `_template/index.${config.style}`)
-        fsExtra.renameSync('_component/index.scss', `_component/index.${config.style}`)
+        fsExtra.renameSync(path.join(projectPath, 'app/_template/index.scss'), path.join(projectPath, `app/_template/index.${config.style}`))
+        fsExtra.renameSync(path.join(projectPath, 'app/_component/index.scss'), path.join(projectPath, `app/_component/index.${config.style}`))
       }
-      fsExtra.copySync('_template', path.join(projectPath, 'app/_template'))
-      fsExtra.copySync('_component', path.join(projectPath, 'app/_component'))
     } catch (err) {
       spinner.fail('拉取模板失败:')
       console.log(colorizeErrorText(err.message));
@@ -53,17 +49,16 @@ const main = async function (projectPath) {
     spinner.succeed('项目初始化成功！')
     console.log(
       colorizeText('开启项目: ') + '\n' +
-      colorizeText('cd ' + projectPath) + '\n' +
-      colorizeText('安装依赖, 推荐用yarn: ') + '\n' +
+      colorizeText('cd ' + projectName) + '\n' +
+      colorizeText('安装依赖: ') + '\n' +
       colorizeText('yarn') + '\n' +
       colorizeText('开始开发~~~!')
     );
   };
-
   if (config.language === 'javascript') {
-    download('direct:https://github.com/CaicoLeung/gulp-wechat-miniprogram.git#template/js', path.join(process.cwd(), projectPath), { clone: true }, cloneErrHandler)
+    download('direct:https://github.com/CaicoLeung/gulp-wechat-miniprogram.git#template/js', projectPath, { clone: true }, cloneErrHandler)
   } else {
-    download('direct:https://github.com/CaicoLeung/gulp-wechat-miniprogram.git#template/ts', path.join(process.cwd(), projectPath), { clone: true }, cloneErrHandler)
+    download('direct:https://github.com/CaicoLeung/gulp-wechat-miniprogram.git#template/ts', projectPath, { clone: true }, cloneErrHandler)
   }
 }
 
