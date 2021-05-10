@@ -1,4 +1,4 @@
-export const defaultConfig = {
+exports.defaultConfig = {
   language: 'typescript',
   style: 'scss'
 }

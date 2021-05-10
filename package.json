@@ -1,13 +1,10 @@
 {
   "name": "gulp-miniprogram-cli",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "微信小程序开发流脚手架, https://github.com/CaicoLeung/gulp-wechat-miniprogram",
   "homepage": "https://github.com/CaicoLeung/miniprogram-cli",
   "bin": {
-    "mp-cli": "dist/src/cli.js"
-  },
-  "scripts": {
-    "build": "tsc --build"
+    "mp-cli": "src/cli.js"
   },
   "repository": "git@github.com:CaicoLeung/miniprogram-cli.git",
   "keywords": [
